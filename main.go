@@ -4,11 +4,10 @@ import (
 	"fmt"
 )
 
-func checkArea(s int32, t int32, treePoint int32, fruits []int32) int32 {
+func countFruitInArea(s int32, t int32, treePoint int32, fruits []int32) int32 {
 	var count int32 = 0
 
 	for _, fruit := range fruits {
-
 		realFruitPoint := treePoint + fruit
 
 		// Sam house
@@ -23,8 +22,8 @@ func process(s int32, t int32, a int32, b int32, apples []int32, oranges []int32
 	appleTree := a
 	orageTree := b
 
-	appleInSamHouse := checkArea(s, t, appleTree, apples)
-	orageInSamHouse := checkArea(s, t, orageTree, oranges)
+	appleInSamHouse := countFruitInArea(s, t, appleTree, apples)
+	orageInSamHouse := countFruitInArea(s, t, orageTree, oranges)
 
 	fmt.Println(appleInSamHouse)
 
