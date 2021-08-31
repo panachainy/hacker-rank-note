@@ -2,28 +2,62 @@ package main
 
 import "fmt"
 
-func process(x1 int32, v1 int32, x2 int32, v2 int32) string {
-	if v1 <= v2 {
-		return "NO"
-	}
+func getDividedSet(values []int32, hightestValue int32) []int32 {
+	var setDivided []int32
+	var i int32
 
-	for x1 <= x2 {
-		x1 += v1
-		x2 += v2
+	for i = values[0]; i <= hightestValue; i++ {
+		result := true
 
-		if x1 == x2 {
-			return "YES"
+		for _, v := range values {
+			if i%v != 0 {
+				result = false
+				break
+			}
+		}
+
+		if result {
+			setDivided = append(setDivided, i)
 		}
 	}
-	return "NO"
+
+	return setDivided
+}
+
+func process(a []int32, b []int32) int32 {
+	lastValue := a[len(a)-1]
+	hightestValue := lastValue * lastValue
+
+	getDividedA := getDividedSet(a, hightestValue)
+	fmt.Println(getDividedA)
+
+	var setDivided []int32
+	for _, valueDA := range getDividedA {
+		result := true
+
+		for _, bValue := range b {
+
+			fmt.Println(valueDA, bValue, bValue%valueDA)
+			if bValue%valueDA != 0 {
+				result = false
+				break
+			}
+		}
+
+		if result {
+			fmt.Printf("got it %v\n", valueDA)
+			setDivided = append(setDivided, valueDA)
+		}
+	}
+
+	fmt.Println(setDivided)
+	return setDivided
 }
 
 func main() {
-	var x1 int32 = 0
-	var v1 int32 = 3
-	var x2 int32 = 4
-	var v2 int32 = 2
+	var a []int32 = []int32{2, 4}
+	var b []int32 = []int32{16, 32, 96}
 
-	result := process(x1, v1, x2, v2)
+	result := process(a, b)
 	fmt.Println(result)
 }
