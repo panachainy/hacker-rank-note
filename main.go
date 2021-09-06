@@ -2,49 +2,67 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
-func process(p int32, q int32) {
-	result := []int64{}
+func process(a []int32) int32 {
+	var resultCount int32 = 0
 
-	for i := int64(p); i <= int64(q); i++ {
-		p2 := i * i
-		p2String := strconv.Itoa(int(p2))
-		p2Length := len(p2String)
+	// # A
+	// countHalf := len(a) / 2
 
-		halfP2 := p2Length / 2
+	// firstArray := a[0:countHalf]
+	// secondArray := a[countHalf:]
 
-		p2First := p2String[:halfP2]
-		p2Second := p2String[halfP2:p2Length]
+	// for _, firstValue := range firstArray {
+	// 	for _, secondValue := range secondArray {
+	// 		result := firstValue - secondValue
+	// 		if result <= 1 {
+	// 			fmt.Println("result ", firstValue, secondValue, result, true)
+	// 			resultCount++
+	// 		} else {
+	// 			fmt.Println("result ", firstValue, secondValue, result, false)
+	// 		}
+	// 	}
+	// }
 
-		// string to int
-		p2FirstInt, _ := strconv.Atoi(p2First)
-		p2SecondInt, _ := strconv.Atoi(p2Second)
-
-		temp := int64(p2FirstInt) + int64(p2SecondInt)
-
-		if temp == i {
-			result = append(result, i)
-		}
-
-	}
-
-	if len(result) == 0 {
-		fmt.Println("INVALID RANGE")
-	} else {
-		for i, v := range result {
-			fmt.Print(v)
-			if i != len(result)-1 {
-				fmt.Print(" ")
+	// # B
+	for i := 0; i < len(a); i++ {
+		for j := 0; j < len(a); j++ {
+			if j == i {
+				continue
+			}
+			result := a[i] - a[j]
+			if result <= 1 && result >= 0 {
+				fmt.Println("result ", a[i], a[j], result)
+				resultCount++
 			}
 		}
 	}
+
+	// # C
+
+	// var count int32 = 0
+	// // max := 0
+	// for i := 0; i < len(a); i++ {
+	// 	for j := i; j < len(a); j++ {
+	// 		if a[j]-a[i] <= 1 {
+	// 			count++
+	// 		}
+	// 	}
+	// 	if count > resultCount {
+	// 		resultCount = count
+	// 	}
+	// 	count = 0
+	// }
+
+	return resultCount
 }
 
 func main() {
-	var p int32 = 1
-	var q int32 = 99999
+	// var a []int32 = []int32{1, 2, 2, 1, 2}
+	// var a []int32 = []int32{1, 2, 2, 3, 1, 2}
+	var a []int32 = []int32{4, 6, 5, 3, 3, 1} // expect 3
 
-	process(p, q)
+	result := process(a)
+	fmt.Println(result)
 }
