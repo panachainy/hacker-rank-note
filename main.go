@@ -4,31 +4,52 @@ import (
 	"fmt"
 )
 
-func absDiffInt(x, y int32) int32 {
-	if x < y {
-		return y - x
-	}
-	return x - y
-}
+func stringReduction(s string) int {
+	a := 0
+	b := 0
+	c := 0
 
-func process(x int32, y int32, z int32) string {
-	var x2z int32 = absDiffInt(x, z)
-	var y2z int32 = absDiffInt(y, z)
-
-	if x2z < y2z {
-		return "Cat A"
-	} else if x2z > y2z {
-		return "Cat B"
-	} else {
-		return "Mouse C"
+	for i := 0; i < len(s); i++ {
+		switch s[i] {
+		case 'a':
+			a++
+		case 'b':
+			b++
+		case 'c':
+			c++
+		}
 	}
+
+	fmt.Println(s)
+	fmt.Println(a, b, c)
+
+	// check empty more than 2 chars
+	if (a == 0 && b == 0) || (b == 0 && c == 0) || (a == 0 && c == 0) {
+		return len(s)
+	}
+
+	return len(s)
 }
 
 func main() {
-	var x int32 = 1
-	var y int32 = 2
-	var z int32 = 3
+	var strings []string = []string{"cab", "bcab", "ccccc"}
+	var strings2 []string = []string{"abcbcba", "ababbac", "abababaccc"}
 
-	result := process(x, y, z)
-	fmt.Println(result)
+	for _, s := range strings {
+		stringReduction(s)
+		// fmt.Println(stringReduction(s))
+	}
+	// 2
+	// 1
+	// 5
+
+	fmt.Println("==========================")
+
+	for _, s := range strings2 {
+		stringReduction(s)
+		// fmt.Println(stringReduction(s))
+	}
+	// 1
+	// 2
+	// 1
 }
