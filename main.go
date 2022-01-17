@@ -56,6 +56,16 @@ func insert(s []string, index int, value string) []string {
 	return s
 }
 
+func getThirdChar(firstValue string, secondValue string) string {
+	if (firstValue == A && secondValue == B) || (firstValue == B && secondValue == A) {
+		return C
+	} else if (firstValue == A && secondValue == C) || (firstValue == C && secondValue == A) {
+		return B
+	} else {
+		return A
+	}
+}
+
 func stringReductionProcess(s string) string {
 	chars := strings.Split(s, "")
 
@@ -68,7 +78,6 @@ func stringReductionProcess(s string) string {
 	}
 
 	for i := 0; i < len(chars)-1; i++ {
-		newChar := ""
 
 		firstValue := string(chars[i])
 		secondValue := string(chars[i+1])
@@ -79,14 +88,7 @@ func stringReductionProcess(s string) string {
 			continue
 		}
 
-		// Get third value
-		if (firstValue == A && secondValue == B) || (firstValue == B && secondValue == A) {
-			newChar = C
-		} else if (firstValue == A && secondValue == C) || (firstValue == C && secondValue == A) {
-			newChar = B
-		} else {
-			newChar = A
-		}
+		newChar := getThirdChar(firstValue, secondValue)
 
 		fmt.Println("raw", chars)
 
