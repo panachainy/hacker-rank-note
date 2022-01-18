@@ -45,11 +45,8 @@ func stringReductionProcess(s string, startIndex int) string {
 	}
 
 	for i := startIndex; i < len(chars)-1; i++ {
-
 		firstValue := string(chars[i])
 		secondValue := string(chars[i+1])
-
-		// fmt.Println(string(firstValue), string(secondValue))
 
 		if firstValue == secondValue {
 			continue
@@ -57,18 +54,9 @@ func stringReductionProcess(s string, startIndex int) string {
 
 		newChar := getThirdChar(firstValue, secondValue)
 
-		// fmt.Println("raw", chars)
-
 		chars = remove(chars, i)
-		// fmt.Printf("1 %#v \n", chars)
 		chars = remove(chars, i)
-		// fmt.Printf("2 %#v \n", chars)
-
 		chars = insert(chars, i, newChar)
-		// fmt.Printf("3 %#v \n", chars)
-
-		// fmt.Println("new chars", newChar)
-		// fmt.Println("==========================")
 	}
 
 	if len(s) != len(chars) {
@@ -94,7 +82,11 @@ func stringReduction(s string) int {
 }
 
 func main() {
-	var strings []string = []string{"cab", "bcab", "ccccc", "abcbcba", "ababbac", "abababaccc"}
+	var strings []string = []string{"cab", "bcab", "ccccc", "abcbcba", "ababbac", "abababaccc", "cacacacbcbcaccccc"}
+
+	// strings := []string{
+	// 	"cacacacbcbcaccccc",
+	// }
 
 	for _, s := range strings {
 		fmt.Println("Length ========", stringReduction(s))
@@ -106,4 +98,6 @@ func main() {
 	// 1
 	// 2
 	// 1
+
+	// 3
 }
