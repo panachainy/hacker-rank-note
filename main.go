@@ -37,6 +37,8 @@ func getThirdChar(firstValue string, secondValue string) string {
 	}
 }
 
+var allResults []string
+
 func stringReductionProcess(s string, startIndex int) string {
 	chars := strings.Split(s, "")
 
@@ -73,6 +75,8 @@ func stringReduction(s string) int {
 	for i, _ := range chars {
 		result2 := stringReductionProcess(s, i)
 
+		fmt.Printf("result2 %v\n", result2)
+
 		if len(result1) > len(result2) {
 			result1 = result2
 		}
@@ -82,11 +86,11 @@ func stringReduction(s string) int {
 }
 
 func main() {
-	var strings []string = []string{"cab", "bcab", "ccccc", "abcbcba", "ababbac", "abababaccc", "cacacacbcbcaccccc"}
+	// var strings []string = []string{"cab", "bcab", "ccccc", "abcbcba", "ababbac", "abababaccc", "cacacacbcbcaccccc"}
 
-	// strings := []string{
-	// 	"cacacacbcbcaccccc",
-	// }
+	strings := []string{
+		"cacacacbcbcaccccc",
+	}
 
 	for _, s := range strings {
 		fmt.Println("Length ========", stringReduction(s))
