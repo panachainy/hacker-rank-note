@@ -1,107 +1,63 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
-func remove(s []string, i int) []string {
-	copy(s[i:], s[i+1:]) // Shift a[i+1:] left one index.
-	s[len(s)-1] = ""     // Erase last element (write zero value).
-	s = s[:len(s)-1]     // Truncate slice.
+func candies(n int32, arr []int32) int64 {
+	var candies []int32
 
-	return s
-}
-
-// 0 <= index <= len(a)
-func insert(s []string, index int, value string) []string {
-	if len(s) == index { // nil or empty slice or after last element
-		return append(s, value)
-	}
-	s = append(s[:index+1], s[index:]...) // index < len(a)
-	s[index] = value
-	return s
-}
-
-func getThirdChar(firstValue string, secondValue string) string {
-	A := "a"
-	B := "b"
-	C := "c"
-
-	if (firstValue == A && secondValue == B) || (firstValue == B && secondValue == A) {
-		return C
-	} else if (firstValue == A && secondValue == C) || (firstValue == C && secondValue == A) {
-		return B
-	} else {
-		return A
-	}
-}
-
-var allResults []string
-
-func stringReductionProcess(s string, startIndex int) string {
-	chars := strings.Split(s, "")
-
-	if len(chars) == 1 {
-		return s
-	}
-
-	for i := startIndex; i < len(chars)-1; i++ {
-		firstValue := string(chars[i])
-		secondValue := string(chars[i+1])
-
-		if firstValue == secondValue {
+	for i, value := range arr {
+		if i == 0 {
+			candies = append(candies, 1)
 			continue
 		}
 
-		newChar := getThirdChar(firstValue, secondValue)
-
-		chars = remove(chars, i)
-		chars = remove(chars, i)
-		chars = insert(chars, i, newChar)
-	}
-
-	if len(s) != len(chars) {
-		return stringReductionProcess(strings.Join(chars, ""), 0)
-	}
-
-	return strings.Join(chars, "")
-}
-
-func stringReduction(s string) int {
-	chars := strings.Split(s, "")
-
-	result1 := "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-	for i, _ := range chars {
-		result2 := stringReductionProcess(s, i)
-
-		fmt.Printf("result2 %v\n", result2)
-
-		if len(result1) > len(result2) {
-			result1 = result2
+		if value > arr[i-1] {
+			candies = append(candies, candies[i-1]+1)
+		} else {
+			candies = append(candies, 1)
 		}
 	}
 
-	return len(result1)
+	// check value
+	for _, v := range candies {
+		fmt.Printf("res v -> %v\n", v)
+	}
+
+	// 4, 6, 4, 5, 6, 2
+	// 1, 2, 1, 2, 3, 1
+	var sum int32
+
+	for _, v := range candies {
+		sum += v
+	}
+
+	return int64(sum)
 }
 
 func main() {
-	// var strings []string = []string{"cab", "bcab", "ccccc", "abcbcba", "ababbac", "abababaccc", "cacacacbcbcaccccc"}
+	// inputs := []int32{4, 6, 4, 5, 6, 2}
+	// lenth := int32(len(inputs))
+	// res1 := candies(lenth, inputs)
 
-	strings := []string{
-		"cacacacbcbcaccccc",
-	}
+	// fmt.Printf("res1 should 10: %v\n", res1)
 
-	for _, s := range strings {
-		fmt.Println("Length ========", stringReduction(s))
-	}
-	// 2
-	// 1
-	// 5
+	// inputs2 := []int32{3, 1, 2, 2}
+	// lenth2 := int32(len(inputs2))
+	// res2 := candies(lenth2, inputs2)
 
-	// 1
-	// 2
-	// 1
+	// fmt.Printf("res2 should 4: %v\n", res2)
 
-	// 3
+	// inputs3 := []int32{10, 2, 4, 2, 6, 1, 7, 8, 9, 2, 1}
+	// lenth3 := int32(len(inputs3))
+	// res3 := candies(lenth3, inputs3)
+
+	// fmt.Printf("res3 should 19: %v\n", res3)
+
+	inputs4 := []int32{8, 2, 4, 3, 5, 2, 6, 4, 5}
+	lenth4 := int32(len(inputs4))
+	res4 := candies(lenth4, inputs4)
+
+	fmt.Printf("res4 should 12: %v\n", res4)
+
+	// 12121212
 }
