@@ -7,7 +7,7 @@ import (
 
 // https://www.hackerrank.com/challenges/candies/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
 func minimumAbsoluteDifference(arr []int32) int32 {
-	minimum := 9999999.9
+	minimum := math.MaxFloat64
 	arr2 := arr
 
 	for _, v := range arr {
