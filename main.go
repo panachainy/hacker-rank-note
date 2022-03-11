@@ -3,18 +3,23 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
 // https://www.hackerrank.com/challenges/candies/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
 func minimumAbsoluteDifference(arr []int32) int32 {
 	minimum := math.MaxFloat64
-	arr2 := arr
+	sort.Slice(arr, func(i, j int) bool { return arr[i] < arr[j] })
 
-	for _, v := range arr {
-		for _, v2 := range arr2 {
-			if resAfterAb := math.Abs(float64(v - v2)); resAfterAb < minimum && resAfterAb > 0 {
-				minimum = resAfterAb
-			}
+	lenth := len(arr)
+
+	for i := range arr {
+		if i == lenth-1 {
+			break
+		}
+
+		if resAfterAb := math.Abs(float64(arr[i] - arr[i+1])); resAfterAb < minimum {
+			minimum = resAfterAb
 		}
 	}
 
