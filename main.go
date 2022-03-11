@@ -10,12 +10,8 @@ func minimumAbsoluteDifference(arr []int32) int32 {
 	minimum := 9999999.9
 	arr2 := arr
 
-	for i, v := range arr {
-		for i2, v2 := range arr2 {
-			if i == i2 {
-				continue
-			}
-
+	for _, v := range arr {
+		for _, v2 := range arr2 {
 			if resAfterAb := math.Abs(float64(v - v2)); resAfterAb < minimum && resAfterAb > 0 {
 				minimum = resAfterAb
 			}
