@@ -1,33 +1,66 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"sort"
 )
 
-// https://www.hackerrank.com/challenges/candies/problem?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=24-hour-campaign
-func minimumAbsoluteDifference(arr []int32) int32 {
-	minimum := math.MaxFloat64
-	sort.Slice(arr, func(i, j int) bool { return arr[i] < arr[j] })
+func checkPrimeNumber(num int) bool {
+	if num < 2 {
+		return false
+	}
+	sq_root := int(math.Sqrt(float64(num)))
+	for i := 2; i <= sq_root; i++ {
+		if num%i == 0 {
+			return false
+		}
+	}
+	return true
+}
 
-	lenth := len(arr)
+func remove(s []int32, i int) []int32 {
+	s[i] = s[len(s)-1]
+	return s[:len(s)-1]
+}
 
-	for i := range arr {
-		if i == lenth-1 {
-			break
+// sort
+// sort.Slice(number, func(i, j int) bool { return number[i] < number[j] })
+
+// revert sort
+// sort.Slice(number, func(i, j int) bool { return number[i] > number[j] })
+
+func waiter(number []int32, q int32) []int32 {
+	// first loop
+	for i := 0; i < int(q); i++ {
+		if checkPrimeNumber(i) {
+			continue
 		}
 
-		if resAfterAb := math.Abs(float64(arr[i] - arr[i+1])); resAfterAb < minimum {
-			minimum = resAfterAb
+		// revert sort
+		sort.Slice(number, func(i, j int) bool { return number[i] > number[j] })
+
+		tmpNumber := number
+
+		// second loop
+		for j, v := range tmpNumber {
+			if v%int32(i) == 0 {
+				remove(number, j)
+			}
+		}
+
+		if len(number) == 0 {
+			break
 		}
 	}
 
-	return int32(minimum)
+	// reverse before start check divisible by prime number
+	// sort divisible value and move to answers
+
+	return number
 }
 
 func main() {
-	inputs := []int32{2222, 23123, 345566, 3312, -323236756}
-	res := minimumAbsoluteDifference(inputs)
-	fmt.Printf("done: %v\n", res)
+	waiter([]int32{3, 4, 7, 6, 5}, 5)
 }
+
+// 4,6,3,7,5
