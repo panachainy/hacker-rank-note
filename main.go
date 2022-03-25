@@ -47,6 +47,7 @@ func waiter(number []int32, q int32) []int32 {
 		fmt.Println("==========================")
 
 		if !checkPrimeNumber(i) {
+			fmt.Println("skip")
 			continue
 		}
 
@@ -54,8 +55,8 @@ func waiter(number []int32, q int32) []int32 {
 		sort.Slice(number, func(i, j int) bool { return number[i] > number[j] })
 
 		tmpNumber := number
-
-		fmt.Println("tmpN", tmpNumber)
+		fmt.Println("i (prime): ", i)
+		// fmt.Println("tmpN", tmpNumber)
 		fmt.Println("N   ", number)
 
 		// var tmpIndex []int
@@ -69,13 +70,19 @@ func waiter(number []int32, q int32) []int32 {
 		for j := len(tmpNumber) - 1; j >= 0; j-- {
 			fmt.Println("in j loop ===", j)
 
+			fmt.Println("tmpNumber[j] value: ", tmpNumber[j])
+			fmt.Println("tmpNumber[j]%int32(i) value: ", tmpNumber[j]%int32(i))
+
 			if tmpNumber[j]%int32(i) == 0 {
-				// tmpIndex = append(tmpIndex, j)
-				// TODO: remove command
-				number = remove(number, j)
+				fmt.Println("== in % loop ==")
 
 				// TODO: add command
 				res = append(res, tmpNumber[j])
+				fmt.Println("% loop res: ", res)
+
+				// TODO: remove command
+				number = remove(number, j)
+				fmt.Println("% loop num: ", number)
 			}
 		}
 
