@@ -6,6 +6,7 @@ import (
 	"sort"
 )
 
+// https://www.hackerrank.com/challenges/waiter/problem?isFullScreen=true
 func checkPrimeNumber(num int) bool {
 	if num < 2 {
 		return false
@@ -104,4 +105,7 @@ func main() {
 	fmt.Println("res main: ", res)
 }
 
+// now it mistake check -> res main:  [4 6 3 5 7]
+
+// Expect
 // 4,6,3,7,5
