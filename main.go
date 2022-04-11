@@ -1,111 +1,79 @@
 package main
 
-import (
-	"fmt"
-	"math"
-	"sort"
-)
+import "fmt"
 
-// https://www.hackerrank.com/challenges/waiter/problem?isFullScreen=true
-func checkPrimeNumber(num int) bool {
-	if num < 2 {
-		return false
+func appendAndDelete(s string, t string, k int32) string {
+	fmt.Println("s", s)
+	fmt.Println("t", t)
+
+	primary := ""
+	secondary := ""
+
+	if len(s) > len(t) {
+		primary = s
+		secondary = t
+	} else {
+		primary = t
+		secondary = s
 	}
-	sq_root := int(math.Sqrt(float64(num)))
-	for i := 2; i <= sq_root; i++ {
-		if num%i == 0 {
-			return false
-		}
-	}
-	return true
-}
 
-func remove(s []int32, index int) []int32 {
-	return append(s[:index], s[index+1:]...)
-}
+	diffIndex := 0
 
-// func remove(s []int32, i int) []int32 {
-// 	fmt.Println("============================")
-// 	fmt.Println("1 remove s: ", s)
-// 	s[i] = s[len(s)-1]
-// 	fmt.Println("2 remove s: ", s)
-// 	res := s[:len(s)-1]
-// 	fmt.Println("3 remove s: ", s)
-// 	return res
-// }
+	primaryLength := len(primary)
+	secondaryLength := len(secondary)
 
-// sort
-// sort.Slice(number, func(i, j int) bool { return number[i] < number[j] })
+	for i := 0; i < primaryLength; i++ {
+		// fmt.Println("check not equal",primary[i],secondary[i])
+		// fmt.Println("diffIndex",diffIndex)
 
-// revert sort
-// sort.Slice(number, func(i, j int) bool { return number[i] > number[j] })
-
-func waiter(number []int32, q int32) []int32 {
-	var res []int32
-	// first loop
-	// for i := 0; i < int(q); i++ {
-	for i := 0; i < 9999; i++ {
-		fmt.Println("==========================")
-
-		if !checkPrimeNumber(i) {
-			fmt.Println("skip")
-			continue
+		if secondaryLength < i+1 {
+			diffIndex = i
+			break
 		}
 
-		// revert sort
-		sort.Slice(number, func(i, j int) bool { return number[i] > number[j] })
-
-		tmpNumber := number
-		fmt.Println("i (prime): ", i)
-		// fmt.Println("tmpN", tmpNumber)
-		fmt.Println("N   ", number)
-
-		// var tmpIndex []int
-
-		// fmt.Println("number: ", i, number)
-		// fmt.Println("tmpNumber: ", i, tmpNumber)
-
-		// second loop from last to begin
-		// for j, v := range tmpNumber {
-
-		for j := len(tmpNumber) - 1; j >= 0; j-- {
-			fmt.Println("in j loop ===", j)
-
-			fmt.Println("tmpNumber[j] value: ", tmpNumber[j])
-			fmt.Println("tmpNumber[j]%int32(i) value: ", tmpNumber[j]%int32(i))
-
-			if tmpNumber[j]%int32(i) == 0 {
-				fmt.Println("== in % loop ==")
-
-				// TODO: add command
-				res = append(res, tmpNumber[j])
-				fmt.Println("% loop res: ", res)
-
-				// TODO: remove command
-				number = remove(number, j)
-				fmt.Println("% loop num: ", number)
-			}
-		}
-
-		fmt.Println("res", res)
-
-		if len(number) == 0 {
+		if primary[i] != secondary[i] {
+			diffIndex = i
 			break
 		}
 	}
 
-	// reverse before start check divisible by prime number
-	// sort divisible value and move to answers
+	if diffIndex == 0 {
+		return "Yes"
+	}
 
-	return res
+	amountAllDiff := int32(primaryLength - diffIndex + secondaryLength - diffIndex)
+
+	// kIsEven := false
+
+	// if k % 2 == 0 {
+	//     kIsEven = true
+	// }
+
+	// if int32(amountAllDiff) > k {
+	//     return "No"
+	// }
+
+	// allDiffIsEven := false
+	// if int32(amountAllDiff) % 2 == 0 {
+	//     allDiffIsEven = true
+	// }
+
+	// if kIsEven == allDiffIsEven {
+	//     return "Yes"
+	// }
+
+	// return "No"
+
+	if k == amountAllDiff || k >= int32(primaryLength+secondaryLength) {
+		return "Yes"
+	} else if amountAllDiff%2 == k%2 && amountAllDiff <= k {
+		return "Yes"
+	}
+
+	return "No"
 }
 
 func main() {
-	res := waiter([]int32{3, 4, 7, 6, 5}, 5)
-	fmt.Println("res main: ", res)
+	resp := appendAndDelete("hackerhappy", "hackerrank", 9)
+	fmt.Println("result:", resp)
 }
-
-// now it mistake check -> res main:  [4 6 3 5 7]
-
-// Expect
-// 4,6,3,7,5
