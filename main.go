@@ -1,62 +1,56 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+	"sort"
+)
 
-func appendAndDelete(s string, t string, k int32) string {
-	primary := ""
-	secondary := ""
+func sortMin(arr []int32) {
+	sort.Slice(arr, func(i, j int) bool { return arr[i] < arr[j] })
+}
 
-	if len(s) > len(t) {
-		primary = s
-		secondary = t
-	} else {
-		primary = t
-		secondary = s
-	}
+func pickingNumbers(a []int32) int32 {
+	var resultCount int32 = 0
+	sortMin(a)
 
-	diffIndex := 0
+	for i := len(a) - 1; i >= 0; i-- {
+		isCount := true
 
-	primaryLength := len(primary)
-	secondaryLength := len(secondary)
+		//
+		fmt.Println("start new loop ---")
+		for j, v := range a {
+			if i == j {
+				fmt.Println("skip: ", i, j)
+				continue
+			}
 
-	for i := 0; i < primaryLength; i++ {
-		if secondaryLength < i+1 {
-			diffIndex = i
-			break
+			if math.Abs(float64(v-a[i])) > 1 {
+				fmt.Println("not pass ", v, a[i], math.Abs(float64(v-a[i])))
+				isCount = false
+				break
+			}
+			fmt.Println("pass ", v, a[i], math.Abs(float64(v-a[i])))
 		}
 
-		if primary[i] != secondary[i] {
-			diffIndex = i
-			break
+		//
+		if isCount {
+			fmt.Println("count: a = ", a[i])
+			resultCount++
 		}
 	}
 
-	if diffIndex == 0 {
-		return "Yes"
-	}
+	// all element must <= 1
 
-	amountAllDiff := int32(primaryLength - diffIndex + secondaryLength - diffIndex)
-
-	if k == amountAllDiff || k >= int32(primaryLength+secondaryLength) {
-		return "Yes"
-	} else if amountAllDiff%2 == k%2 && amountAllDiff <= k {
-		return "Yes"
-	}
-
-	return "No"
+	return resultCount
 }
 
 func main() {
-	fmt.Println("expect - yes", "result:",
-		appendAndDelete("hackerhappy", "hackerrank", 9))
+	fmt.Println("expect - 3", "result:",
+		pickingNumbers([]int32{4, 6, 5, 3, 3, 1}))
 
-	fmt.Println("==")
+	fmt.Println("===========")
 
-	fmt.Println("expect - yes", "result:",
-		appendAndDelete("aaa", "a", 5))
-
-	fmt.Println("==")
-
-	fmt.Println("expect - no", "result:",
-		appendAndDelete("ashley", "ash", 2))
+	fmt.Println("expect - 5", "result:",
+		pickingNumbers([]int32{1, 2, 2, 3, 1, 2}))
 }
