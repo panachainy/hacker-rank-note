@@ -2,34 +2,38 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
-func letterToPosition(letter string) int32 {
-	alphabet := "abcdefghijklmnopqrstuvwxyz"
-	letter = strings.ToLower(letter)
-	position := strings.Index(alphabet, letter)
-	return int32(position)
-}
+func utopianTree(n int32) int32 {
+	height := int32(0)
+	isDouble := false
+	fmt.Println("n", n)
 
-func designerPdfViewer(h []int32, word string) int32 {
-	highest := int32(0)
-	characters := strings.Split(word, "")
-	for _, character := range characters {
-		charIndex := letterToPosition(character)
-		fmt.Println(h[charIndex])
+	for i := int32(0); i <= n; i++ {
+		fmt.Println("i", i)
 
-		if highest <= h[charIndex] {
-			highest = h[charIndex]
+		if isDouble {
+			height *= 2
+			fmt.Println("x2")
+		} else {
+			height += 1
+			fmt.Println("+1")
+
 		}
+		fmt.Println("height", height)
+
+		isDouble = !isDouble
 	}
 
-	result := len(word) * 1 * int(highest)
-	return int32(result)
+	return height
 }
 
 func main() {
-	result := designerPdfViewer([]int32{1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7}, "zaba")
-	fmt.Println("res: ", result)
-
+	fmt.Println("[[[res: ", utopianTree(0))
+	fmt.Println("==")
+	fmt.Println("[[[res: ", utopianTree(1))
+	fmt.Println("==")
+	fmt.Println("[[[res: ", utopianTree(3))
+	fmt.Println("==")
+	fmt.Println("[[[res: ", utopianTree(4))
 }
