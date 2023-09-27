@@ -4,36 +4,34 @@ import (
 	"fmt"
 )
 
-func utopianTree(n int32) int32 {
-	height := int32(0)
-	isDouble := false
-	fmt.Println("n", n)
+func selfDouble(number int32) int32 {
+	return number * number
+}
 
-	for i := int32(0); i <= n; i++ {
-		fmt.Println("i", i)
+func squares(a int32, b int32) int32 {
+	var squareIndex = int32(1)
+	var squareCount = int32(0)
 
-		if isDouble {
-			height *= 2
-			fmt.Println("x2")
-		} else {
-			height += 1
-			fmt.Println("+1")
+	for true {
+		var currentDouble = selfDouble(squareIndex)
 
+		if currentDouble >= a && currentDouble <= b {
+			squareCount++
 		}
-		fmt.Println("height", height)
 
-		isDouble = !isDouble
+		if currentDouble >= b {
+			break
+		}
+
+		squareIndex++
 	}
 
-	return height
+	return squareCount
 }
 
 func main() {
-	fmt.Println("[[[res: ", utopianTree(0))
+	fmt.Println("[[[res: ", squares(3, 9))
 	fmt.Println("==")
-	fmt.Println("[[[res: ", utopianTree(1))
+	fmt.Println("[[[res: ", squares(17, 24))
 	fmt.Println("==")
-	fmt.Println("[[[res: ", utopianTree(3))
-	fmt.Println("==")
-	fmt.Println("[[[res: ", utopianTree(4))
 }
