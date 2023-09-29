@@ -37,10 +37,10 @@ func permutationEquation(p []int32) []int32 {
 }
 
 func main() {
-	// fmt.Println("[[[res: ", permutationEquation([]int32{2, 3, 1}))
+	fmt.Println("[[[res: ", permutationEquation([]int32{2, 3, 1}))
 	fmt.Println("==")
 	fmt.Println("[[[res: ", permutationEquation([]int32{4, 3, 5, 1, 2}))
 	fmt.Println("==")
-	// fmt.Println("[[[res: ", getTotalX(17, 24))
-	// fmt.Println("==")
+	fmt.Println("[[[res: ", permutationEquation([]int32{5, 2, 1, 3, 4}))
+	fmt.Println("==")
 }
