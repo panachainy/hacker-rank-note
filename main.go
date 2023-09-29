@@ -4,34 +4,43 @@ import (
 	"fmt"
 )
 
-func selfDouble(number int32) int32 {
-	return number * number
+func updateSliceAtIndex(slice []int32, index int32, newValue int32) []int32 {
+	// Check if the index is within the bounds of the slice
+	if index >= int32(0) && index < int32(len(slice)) {
+		// Create a new slice by slicing the original slice
+		// up to the specified index, then appending the new value,
+		// and finally appending the rest of the original slice.
+		newSlice := append(append([]int32{}, slice[:index]...), newValue)
+		newSlice = append(newSlice, slice[index+1:]...)
+		return newSlice
+	} else {
+		fmt.Println("Index out of range")
+		return slice // Return the original slice if the index is out of range
+	}
 }
 
-func squares(a int32, b int32) int32 {
-	var squareIndex = int32(1)
-	var squareCount = int32(0)
+func permutationEquation(p []int32) []int32 {
+	results := make([]int32, len(p))
 
-	for true {
-		var currentDouble = selfDouble(squareIndex)
+	for _, item := range p {
+		fmt.Println(item)
+		var value = p[p[item-1]-1]
+		fmt.Println("result: ", value, "index", value-1)
 
-		if currentDouble >= a && currentDouble <= b {
-			squareCount++
-		}
+		results = updateSliceAtIndex(results, value-1, item)
 
-		if currentDouble >= b {
-			break
-		}
-
-		squareIndex++
+		fmt.Println("done: ", results)
+		fmt.Println("=====================")
 	}
 
-	return squareCount
+	return results
 }
 
 func main() {
-	fmt.Println("[[[res: ", squares(3, 9))
+	// fmt.Println("[[[res: ", permutationEquation([]int32{2, 3, 1}))
 	fmt.Println("==")
-	fmt.Println("[[[res: ", squares(17, 24))
+	fmt.Println("[[[res: ", permutationEquation([]int32{4, 3, 5, 1, 2}))
 	fmt.Println("==")
+	// fmt.Println("[[[res: ", getTotalX(17, 24))
+	// fmt.Println("==")
 }
